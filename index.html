@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stranger Things Scrapbook</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* GLOBAL */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Montserrat', sans-serif;
+    background:#0b0b0b;
+    color:#ffffff;
+    overflow-x:hidden;
+}
+
+section{
+    min-height:100vh;
+    position:relative;
+    display:none;
+    animation:fadeIn 0.8s ease;
+}
+
+section.active{
+    display:block;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* VIDEO BACKGROUND */
+.bg-video{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:0;
+    filter:brightness(100%);
+}
+
+.overlay{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8));
+    z-index:1;
+}
+
+.content{
+    position:relative;
+    z-index:2;
+    padding-top:120px;
+}
+
+/* LOGIN PAGE */
+#login.active{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+
+.login-box{
+    position:relative;
+    z-index:2;
+    background:rgba(0, 0, 0, 0.311);
+    padding:50px 45px;
+    border-radius:8px;
+    width:100%;
+    max-width:400px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 10px 50px rgba(0,0,0,0.7);
+}
+
+.login-box h2{
+    font-family:'Montserrat', sans-serif;
+    font-weight:700;
+    letter-spacing:6px;
+    font-size:42px;
+    color:#e50914;
+    margin-bottom:30px;
+    text-align:center;
+}
+
+.login-box input{
+    background:rgba(51,51,51,0.9);
+    border:1px solid #333;
+    color:#fff;
+    padding:15px;
+    border-radius:4px;
+    margin-bottom:20px;
+    font-size:15px;
+}
+
+.login-box input::placeholder{
+    color:#8c8c8c;
+}
+
+.login-box input:focus{
+    background:rgba(51,51,51,1);
+    border-color:#e50914;
+    color:#fff;
+    outline:none;
+    box-shadow:0 0 0 0.2rem rgba(229,9,20,0.25);
+}
+
+.btn-netflix{
+    background:#e50914;
+    color:#fff;
+    border:none;
+    padding:15px;
+    border-radius:4px;
+    font-weight:600;
+    font-size:16px;
+    letter-spacing:1px;
+    transition:all 0.3s;
+    cursor:pointer;
+}
+
+.btn-netflix:hover{
+    background:#f40612;
+    transform:scale(1.02);
+}
+
+/* NAVBAR */
+.navbar{
+    background:rgba(0,0,0,0.95);
+    backdrop-filter:blur(10px);
+    border-bottom:3px solid #e50914;
+    padding:15px 0;
+}
+
+.navbar-brand{
+    font-family:'Montserrat', sans-serif;
+    font-size:32px;
+    letter-spacing:4px;
+    color:#e50914 !important;
+    font-weight:700;
+}
+
+.nav-link{
+    cursor:pointer;
+    position:relative;
+    margin-left:25px;
+    color:#e5e5e5 !important;
+    font-weight:500;
+    font-size:15px;
+    letter-spacing:0.5px;
+    transition:color 0.3s;
+    padding:8px 0 !important;
+}
+
+.nav-link::after{
+    content:"";
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:0;
+    height:3px;
+    background:#e50914;
+    transition:width 0.3s ease;
+}
+
+.nav-link:hover{
+    color:#fff !important;
+}
+
+.nav-link:hover::after{
+    width:100%;
+}
+
+/* HERO SECTION */
+.hero{
+    min-height:90vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:0 20px;
+}
+
+.hero h1{
+    font-family:'Montserrat', sans-serif;
+    font-size:80px;
+    font-weight:700;
+    letter-spacing:8px;
+    color:#e50914;
+    text-shadow:0 0 30px rgba(229,9,20,0.8);
+    margin-bottom:20px;
+}
+
+.hero p{
+    max-width:700px;
+    font-size:18px;
+    line-height:1.7;
+    opacity:0.9;
+    font-weight:300;
+}
+
+/* ABOUT SECTION */
+#about .poster{
+    max-width:420px;
+    border-radius:12px;
+    margin-bottom:30px;
+}
+
+
+#about .poster:hover{
+    transform:scale(1.03);
+}
+
+#about .description{
+    max-width:900px;
+    margin:0 auto;
+    font-size:17px;
+    line-height:1.8;
+    text-align:justify;
+    padding:0 20px;
+}
+
+
+/* SCENES SECTION */
+.scene-img{
+    max-width:800px;
+    width:100%;
+    border-radius:12px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.8);
+    margin-bottom:30px;
+}
+
+/* UPSIDE DOWN SECTION */
+#upside{
+    background:#0a1929;
+}
+
+#upside h1{
+    font-family:'Montserrat', sans-serif;
+    font-weight:700;
+    font-size:70px;
+    letter-spacing:8px;
+    color:#8b0000;
+    text-shadow:0 0 40px rgba(139,0,0,0.8);
+    margin-bottom:30px;
+}
+
+#upside p{
+    max-width:800px;
+    font-size:18px;
+    line-height:1.8;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px){
+    .hero h1{
+        font-size:50px;
+        letter-spacing:4px;
+    }
+    
+    .login-box{
+        margin:20px;
+        padding:35px 30px;
+    }
+    
+    .nav-link{
+        margin-left:15px;
+        font-size:14px;
+    }
+    
+    .character-card img{
+        height:280px;
+    }
+}
+
+/* NEW CHARACTERS COLLAPSE STYLE */
+.char-card{
+    cursor:pointer;
+    overflow:hidden;
+    border-radius:10px;
+}
+
+.char-card img{
+    width:100%;
+    height:360px;
+    object-fit:cover;
+    transition:transform .4s, box-shadow .4s;
+    border-radius:10px;
+}
+
+.char-card:hover img{
+    transform:scale(1.05);
+    box-shadow:0 15px 40px rgba(229,9,20,.5);
+}
+
+.char-desc{
+    background:#111;
+    padding:15px;
+    font-size:14px;
+    line-height:1.6;
+    border-radius:0 0 10px 10px;
+}
+
+.col-md-4, .col-12{
+    display:flex;
+    flex-direction:column;
+}
+
+.char-desc{
+    margin-top:12px;
+}
+
+.justify {
+    text-align: justify;
+}
+
+#scenes{
+    background-image: url('maxiconic.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+#scenes h1{
+    font-size: 42px;   
+    letter-spacing: 4px;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<!-- AUDIO ELEMENTS -->
+<audio id="homeMusic" src="homeMusic.mp3" loop></audio>
+<audio id="aboutMusic" src="aboutMusic.mp3" loop></audio>
+<audio id="charactersMusic" src="charactersMusic.mp3" loop></audio>
+<audio id="upsideMusic" src="upsideMusic.mp3" loop></audio>
+<audio id="scenesMusic" src="scenesMusic.mp3" loop></audio>
+
+<!-- LOGIN PAGE -->
+<section id="login" class="active">
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="assetsvideologin-bg.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+    <div class="login-box">
+        <h2>WELLCOME</h2>
+        <input id="user" class="form-control" placeholder="Username" autocomplete="off">
+        <input id="pass" type="password" class="form-control" placeholder="Password">
+        <button onclick="login()" class="btn-netflix w-100">ENTER</button>
+    </div>
+</section>
+
+<!-- NAVBAR -->
+<nav id="navbar" class="navbar navbar-expand-lg navbar-dark fixed-top d-none">
+    <div class="container">
+        <a class="navbar-brand">STRANGER THINGS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" onclick="showPage('home')">Home</a></li>
+                <li class="nav-item"><a class="nav-link" onclick="showPage('about')">About</a></li>
+                <li class="nav-item"><a class="nav-link" onclick="showPage('characters')">Characters</a></li>
+                <li class="nav-item"><a class="nav-link" onclick="showPage('upside')">Upside Down</a></li>
+                <li class="nav-item"><a class="nav-link" onclick="showPage('scenes')">Scenes</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- HOME PAGE -->
+<section id="home">
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="assetsvideohome-bg.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+    <div class="content">
+        <div class="hero">
+            <h1>STRANGER THINGS</h1>
+            <p>A cinematic scrapbook exploring memories, characters, scenes, and the mysterious parallel world beneath Hawkins. Journey into the 1980s where friendship, supernatural forces, and government secrets collide.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT PAGE -->
+<section id="about">
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="assetsvideoabout-bg.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+    <div class="content">
+        <div class="hero">
+            <img src="assetsimageposter.png" class="poster img-fluid" alt="Stranger Things Poster">
+            <div class="description">
+                <p>
+                    Stranger Things adalah serial drama fiksi ilmiah horor Amerika yang diciptakan oleh Duffer Brothers. Serial ini berlatar di kota fiksi Hawkins, Indiana pada tahun 1980-an, dan mengikuti sekelompok teman yang menghadapi kekuatan supernatural dan rahasia pemerintah yang berbahaya.
+                </p>
+                <p class="mt-3">
+                    Kisah dimulai ketika seorang anak laki-laki bernama Will Byers menghilang secara misterius. Pencarian untuk menemukan Will membawa teman-temannya pada pertemuan dengan Eleven, seorang gadis muda dengan kekuatan psikis yang luar biasa. Mereka segera menemukan keberadaan dunia paralel yang gelap dan berbahaya yang dikenal sebagai "Upside Down".
+                </p>
+                <p class="mt-3">
+                    Serial ini menggabungkan elemen-elemen dari budaya populer tahun 1980-an, termasuk referensi ke karya-karya Stephen King, Steven Spielberg, John Carpenter, dan George Lucas. Dengan soundtrack synth yang ikonik, referensi nostalgik, dan cerita yang mencengkram, Stranger Things telah menjadi fenomena budaya global yang menciptakan kembali keajaiban dan ketakutan era tersebut.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CHARACTERS PAGE -->
+<section id="characters">
+
+    <div class="overlay" style="background:rgba(0,0,0,0.85);"></div>
+    <div class="content">
+        <div class="container">
+
+            <div class="hero mb-5">
+                <h1>CHARACTERS</h1>
+            </div>
+
+            <div class="row g-4" id="charRow">
+
+                <!-- 1 Eleven -->
+                <div class="col-md-4 d-flex flex-column">
+                    <div class="char-card" data-bs-toggle="collapse" data-bs-target="#c1">
+                        <img src="eleven.jpeg" class="img-fluid">
+                    </div>
+                    <div id="c1" class="collapse char-desc">
+                        <p class="justify">
+                        Eleven — Dibesarkan di balik kaca laboratorium, Eleven belajar dunia lewat rasa takut sebelum mengenal rasa aman. Telekinesisnya bukan sekadar kekuatan itu bekas luka dari eksperimen yang tak manusiawi. Di Hawkins, ia menemukan nama, keluarga, dan alasan untuk bertahan. Saat ancaman datang dari dimensi lain, Eleven berdiri paling depan, menanggung beban yang tak pernah diminta.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 2 Mike -->
+                <div class="col-md-4 d-flex flex-column">
+                    <div class="char-card" data-bs-toggle="collapse" data-bs-target="#c2">
+                        <img src="mike.jpeg" class="img-fluid">
+                    </div>
+                    <div id="c2" class="collapse char-desc">
+                        <p class="justify">
+                        Mike Wheeler — Mike memimpin bukan karena paling kuat, tapi karena paling percaya. Ia melihat manusia di balik “eksperimen” bernama Eleven, dan tak pernah berhenti berdiri di sisinya. Logika, empati, dan keberanian yang tenang membuatnya jadi jangkar kelompok saat keadaan mulai tak masuk akal.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 3 Dustin -->
+                <div class="col-md-4 d-flex flex-column">
+                    <div class="char-card" data-bs-toggle="collapse" data-bs-target="#c3">
+                        <img src="dustin.jpeg" class="img-fluid">
+                    </div>
+                    <div id="c3" class="collapse char-desc">
+                        <p class="justify">
+                        Dustin Henderson — Rasa ingin tahu Dustin sering membuka pintu yang seharusnya tetap tertutup. Ia cerdas, cerewet, dan selalu punya rencana cadangan biasanya dengan radio, kabel, atau ide gila yang entah bagaimana berhasil. Di tengah teror, Dustin mengingatkan semua orang bahwa harapan bisa terdengar seperti tawa.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 4 Lucas -->
+                <div class="col-md-4 d-flex flex-column">
+                    <div class="char-card" data-bs-toggle="collapse" data-bs-target="#c4">
+                        <img src="lucas.jpeg" class="img-fluid">
+                    </div>
+                    <div id="c4" class="collapse char-desc">
+                        <p class="justify">
+                        Lucas Sinclair — Lucas adalah suara realistis di tengah kepanikan. Ia mempertanyakan, mengamati, lalu bertindak dengan presisi. Ketika situasi memaksa pilihan sulit, Lucas tidak lari ia melindungi orang-orang yang ia sayang, bahkan saat ketakutan terasa paling masuk akal.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 5 Will -->
+                <div class="col-md-4 d-flex flex-column">
+                    <div class="char-card" data-bs-toggle="collapse" data-bs-target="#c5">
+                        <img src="will.jpeg" class="img-fluid">
+                    </div>
+                    <div id="c5" class="collapse char-desc">
+                        <p class="justify">
+                        Will Byers — Will tidak pernah benar-benar kembali dari Upside Down. Ia membawa pulang sesuatu yang tak terlihat: koneksi yang dingin, sunyi, dan terus mengintai. Sensitivitasnya pada bahaya sering datang lebih dulu dari tanda apa pun. Will adalah pengingat bahwa beberapa luka tidak tampak, tapi selalu terasa.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 6 Max -->
+                <div class="col-md-4 d-flex flex-column">
+                    <div class="char-card" data-bs-toggle="collapse" data-bs-target="#c6">
+                        <img src="max.jpeg" class="img-fluid">
+                    </div>
+                    <div id="c6" class="collapse char-desc">
+                        <p class="justify">
+                        Max Mayfield — Max belajar bertahan dengan menyembunyikan rasa sakit di balik ketegasan. Kehilangan dan rasa bersalah menumpuk diam-diam, sampai Vecna menemukan celahnya. Di titik terendah, Max membuktikan bahwa keberanian bukan berarti tak takut melainkan tetap memilih hidup.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 7 Steve -->
+                <div class="col-md-4 d-flex flex-column">
+                    <div class="char-card" data-bs-toggle="collapse" data-bs-target="#c7">
+                        <img src="steve.jpeg" class="img-fluid">
+                    </div>
+                    <div id="c7" class="collapse char-desc">
+                        <p class="justify">
+                        Steve Harrington — Dari raja pesta sekolah menjadi pelindung anak-anak Hawkins, Steve berubah tanpa banyak bicara. Ia bukan yang paling pintar, tapi selalu yang pertama maju saat bahaya mendekat. Tongkat baseball di tangannya adalah simbol sederhana: lakukan yang perlu, lindungi yang penting.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 8 Nancy -->
+                <div class="col-md-4 d-flex flex-column">
+                    <div class="char-card" data-bs-toggle="collapse" data-bs-target="#c8">
+                        <img src="nancy.jpeg" class="img-fluid">
+                    </div>
+                    <div id="c8" class="collapse char-desc">
+                        <p class="justify">
+                        Nancy Wheeler — Nancy mengejar kebenaran dengan ketelitian dan keberanian yang tak nyaman bagi banyak orang. Ia menolak diam, menolak takut, dan menolak percaya pada jawaban mudah. Ketika konspirasi menebal, Nancy justru semakin fokus.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 9 Jonathan -->
+                <div class="col-md-4 d-flex flex-column">
+                    <div class="char-card" data-bs-toggle="collapse" data-bs-target="#c9">
+                        <img src="jonathan.jpeg" class="img-fluid">
+                    </div>
+                    <div id="c9" class="collapse char-desc">
+                        <p class="justify"> 
+                        Jonathan Byers — Pendiam, peka, dan selalu mengutamakan keluarga. Kamera Jonathan menangkap hal-hal yang orang lain lewatkan. Ia tidak banyak bicara, tapi tindakannya konsisten: hadir, menjaga, dan berdiri di samping mereka yang ia cintai.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 10 Robin -->
+                <div class="col-md-4 d-flex flex-column">
+                    <div class="char-card" data-bs-toggle="collapse" data-bs-target="#c10">
+                        <img src="robin.jpeg" class="img-fluid">
+                    </div>
+                    <div id="c10" class="collapse char-desc">
+                        <p class="justify">
+                        Robin Buckley — Robin cepat, tajam, dan tak pernah kehabisan komentar sarkastik. Otaknya bekerja seperti teka-teki yang selalu menemukan celah. Di balik humornya, Robin adalah rekan yang setia tenang saat yang lain panik.
+                        </p>    
+                    </div>
+                </div>
+
+                <!-- 11 Eddie -->
+                <div class="col-md-4 d-flex flex-column">
+                    <div class="char-card" data-bs-toggle="collapse" data-bs-target="#c11">
+                        <img src="eddie.jpeg" class="img-fluid">
+                    </div>
+                    <div id="c11" class="collapse char-desc">
+                        <p class="justify">
+                        Eddie Munson — Eddie hidup di pinggir stereotip kota kecil. Metal, keras, dan disalahpahami. Namun saat Hawkins butuh pahlawan, Eddie memilih berdiri di garis depan. Ia membuktikan bahwa keberanian sering datang dari mereka yang paling diremehkan.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 12 Hopper -->
+                <div class="col-md-4 d-flex flex-column">
+                    <div class="char-card" data-bs-toggle="collapse" data-bs-target="#c12">
+                        <img src="hopper.jpeg" class="img-fluid">
+                    </div>
+                    <div id="c12" class="collapse char-desc">
+                        <p class="justify">
+                        Jim Hopper — Hopper membawa masa lalu yang berat dan hati yang protektif. Ia keras di luar, hangat di dalam. Bagi Eleven, ia bukan polisi ia rumah. Saat dunia runtuh, Hopper tetap berdiri, keras kepala seperti biasa.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 13 Vecna full row -->
+                <div class="col-md-4 offset-md-4 d-flex flex-column">
+                <div class="char-card" onclick="toggleVecna()">
+                    <div class="char-card" data-bs-toggle="collapse" data-bs-target="#c13">
+                        <img src="henry.jpeg" class="img-fluid">
+                    </div>
+                    <div id="c13" class="char-desc d-none">
+                        <p class="justify">        
+                         Vecna — Sebelum menjadi Vecna, ia adalah Henry Creel anak dengan kemampuan membaca pikiran dan kebencian yang tumbuh diam-diam pada dunia. Di Hawkins Lab, ia diberi nomor 001 dan belajar mengendalikan kekuatannya dengan presisi yang mengerikan.
+                        <br>
+                        Dengan identitas samaran sebagai petugas laboratorium yang ramah (sering dijuluki “Mr. Whatsit”), ia memanipulasi Eleven sebelum akhirnya terlempar ke dimensi lain. Tubuhnya hancur, tapi ia tidak mati ia berevolusi, menyatu dengan Upside Down.
+                        <br>
+                        Sebagai Vecna, ia tidak menyerang secara acak. Ia masuk lewat trauma, rasa bersalah, dan kenangan paling gelap korbannya.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- UPSIDE DOWN PAGE -->
+<section id="upside">
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="assetsvideoupside-bg.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+    <div class="content">
+        <div class="hero">
+            <h1>THE UPSIDE DOWN</h1>
+            <p>
+                Dunia paralel yang gelap, beracun, dan dipenuhi makhluk mengerikan. Upside Down adalah cermin gelap dari Hawkins yang menjadi pusat konflik sepanjang cerita. Tempat ini adalah dimensi alternatif yang terhubung dengan dunia nyata melalui portal yang diciptakan oleh eksperimen Eleven. Di sini, waktu terhenti, vegetasi membusuk, dan partikel-partikel beracun melayang di udara yang dingin dan berbahaya.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- SCENES PAGE -->
+<section id="scenes">
+    <div class="overlay"></div>
+    <div class="content">
+        <div class="hero">
+            <h1>ICONIC SCENES</h1>
+            <p>
+                Max berdiri di antara nisan saat langit seperti retak dan Vecna menariknya ke ruang gelap yang sunyi. Di dunia nyata, tubuhnya terangkat, rapuh, seolah hidupnya sedang dicabut pelan-pelan.
+
+Di dalam pikirannya, ia dipaksa menatap rasa bersalah yang selama ini ia kubur. <br> Lalu terdengar Running Up That Hill (A Deal with God) dari Kate Bush bukan sekadar lagu, melainkan benang yang menuntunnya keluar.
+
+Max tidak diselamatkan oleh orang lain. Ia diselamatkan oleh kenangan, musik, dan keinginannya sendiri untuk tetap hidup.
+                
+            </p>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+let currentMusic = null;
+
+function login(){
+    const username = document.getElementById('user').value;
+    const password = document.getElementById('pass').value;
+
+    if(username === "admin" && password === "123"){
+
+        // tampilkan navbar
+        document.getElementById('navbar').classList.remove('d-none');
+
+        // pindah halaman via sistem showPage 
+        showPage('home');
+
+        // musik
+        stopAllMusic();
+        playMusic('homeMusic');
+
+    } else {
+        alert("Wrong username or password!");
+    }
+}
+
+function showPage(pageId){
+    // Hide all sections
+    document.querySelectorAll('section').forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // Show selected section
+    document.getElementById(pageId).classList.add('active');
+    
+    // Stop all music and play page-specific music
+    stopAllMusic();
+    
+    // Map pages to their music
+    const musicMap = {
+        'home': 'homeMusic',
+        'about': 'aboutMusic',
+        'characters': 'charactersMusic',
+        'scenes': 'scenesMusic',
+        'upside': 'upsideMusic'
+    };
+    
+    if(musicMap[pageId]){
+        playMusic(musicMap[pageId]);
+    }
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
+}
+
+function stopAllMusic(){
+    const allMusic = document.querySelectorAll('audio');
+    allMusic.forEach(music => {
+        music.pause();
+        music.currentTime = 0;
+    });
+}
+
+function playMusic(musicId){
+    const music = document.getElementById(musicId);
+    if(music){
+        music.volume = 0.4; // Set volume to 40%
+        music.play().catch(err => {
+            console.log('Audio autoplay prevented:', err);
+        });
+        currentMusic = music;
+    }
+}
+
+// Handle enter key on login
+document.addEventListener('DOMContentLoaded', function(){
+    const passInput = document.getElementById('pass');
+    if(passInput){
+        passInput.addEventListener('keypress', function(e){
+            if(e.key === 'Enter'){
+                login();
+            }
+        });
+    }
+});
+
+function toggleVecna(){
+    const v = document.getElementById('c13');
+    v.classList.toggle('d-none');
+}
+
+</script>
+<script>
+document.addEventListener('click', function(e){
+  const trigger = e.target.closest('[data-bs-toggle="collapse"]');
+  if(!trigger) return;
+
+  const target = document.querySelector(trigger.getAttribute('data-bs-target'));
+
+  document.querySelectorAll('.collapse.show').forEach(function(el){
+    if(el !== target){
+      bootstrap.Collapse.getOrCreateInstance(el).hide();
+    }
+  });
+});
+</script>
+
+</body>
+</html>
